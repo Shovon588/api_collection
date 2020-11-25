@@ -1,0 +1,16 @@
+
+venv/
+
+trim_url/migrations/__pycache__/
+
+trim_url/migrations/
+
+trim_url/__pycache__/
+
+api_collection/__pycache__/
+
+.idea/inspectionProfiles/
+
+.idea/
+
+db.sqlite3
