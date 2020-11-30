@@ -43,15 +43,18 @@ class TrimLink(APIView):
 class ClickInfoView(APIView):
     def get(self, request, hashed_code):
         obj_id = unhashing(hashed_code)
-
         try:
-            link = Trim.objects.get(id=obj_id)
+            link_obj = Trim.objects.get(id=obj_id)
+            short_link = BASE_URL + link_obj.code
         except:
             return Response({"status": "failed",
                              "message": "No url present with that slug"},
                             status=status.HTTP_400_BAD_REQUEST)
 
-        links = ClickInfo.objects.filter(link=link)
+        created = link_obj.created_at
+        noc = link_obj.noc
+
+        links = ClickInfo.objects.filter(link=link_obj)
 
         time_band = {
             "0-4": 0,
@@ -61,6 +64,8 @@ class ClickInfoView(APIView):
             "16-20": 0,
             "20-0": 0
         }
+
+        link = None
         for link in links:
             if 0 < link.created_at.hour < 4:
                 time_band["0-4"] += 1
@@ -75,9 +80,21 @@ class ClickInfoView(APIView):
             elif 20 < link.created_at.hour < 24:
                 time_band["20-0"] += 1
 
+        frequency = time_band.values()
+        if link:
+            updated = link.created_at.date()
+        else:
+            updated = "--:--:--"
+
         return Response({"status": "success",
                          "message": "Response available for this code.",
-                         "data": time_band
+                         "data": {
+                             "short_link": short_link,
+                             "time_band": frequency,
+                             "created": created,
+                             "updated": updated,
+                             "no_of_clicks": noc,
+                         }
                          },
                         status=status.HTTP_200_OK)
 
