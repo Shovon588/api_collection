@@ -4,6 +4,7 @@ from .models import Trim
 
 
 class TrimSerializer(serializers.ModelSerializer):
+    alias = serializers.CharField(max_length=16, required=False)
     class Meta:
         model = Trim
-        fields = ["link"]
+        fields = ["link", "alias"]
