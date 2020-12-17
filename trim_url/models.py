@@ -5,7 +5,7 @@ from django.db import models
 
 
 class Trim(models.Model):
-    link = models.URLField(verbose_name="Original Link")
+    link = models.CharField(max_length=512, verbose_name="Original Link")
     code = models.CharField(max_length=16, verbose_name="Hashed Code", blank=True)
     noc = models.PositiveIntegerField(verbose_name="Number of click", default=0, blank=True, null=True)
 
