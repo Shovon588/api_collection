@@ -14,3 +14,5 @@ api_collection/__pycache__/
 .idea/
 
 db.sqlite3
+
+youtube_dl/__pycache__/
