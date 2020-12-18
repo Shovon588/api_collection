@@ -42,6 +42,7 @@ INSTALLED_APPS = [
     'corsheaders',
 
     'trim_url',
+    'youtube_dl',
 ]
 
 MIDDLEWARE = [
